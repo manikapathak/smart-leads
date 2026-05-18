@@ -66,6 +66,7 @@ export function LeadFilters({ filters, onChange, onReset }: LeadFiltersProps) {
           Clear
         </Button>
       )}
+
     </div>
   );
 }
