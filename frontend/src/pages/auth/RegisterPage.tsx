@@ -53,6 +53,13 @@ export default function RegisterPage() {
               {...register('name')}
             />
             <Input
+              label="Username"
+              placeholder="janesmith"
+              autoComplete="username"
+              error={errors.username?.message}
+              {...register('username')}
+            />
+            <Input
               label="Email"
               type="email"
               placeholder="you@company.com"
