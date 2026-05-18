@@ -92,7 +92,6 @@ const authService = {
   async login({ username, password }: LoginPayload) {
 
     const user = await userRepository.findByUsername(username);
-    console.log(user);
 
     if (!user) {
       throw new Error('Invalid username or password');
