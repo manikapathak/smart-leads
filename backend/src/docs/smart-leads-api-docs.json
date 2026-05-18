@@ -1,0 +1,177 @@
+{
+  "project": "smart-leads",
+  "version": "1.0.0",
+  "baseUrl": "localhost:5000",
+  "generatedAt": "2026-05-17",
+  "description": "Complete API documentation for the smart-leads backend application. Covers authentication and lead management endpoints.",
+  "authentication": {
+    "type": "Bearer Token (JWT)",
+    "description": "All leads endpoints require a JWT token obtained from the login endpoint. Pass it in the request header as: authorization: bearer <token>"
+  },
+  "groups": [
+    {
+      "name": "auth",
+      "description": "Endpoints for user registration and authentication.",
+      "endpoints": [
+        {
+          "name": "register",
+          "method": "POST",
+          "path": "/api/auth/register",
+          "fullUrl": "localhost:5000/api/auth/register",
+          "authRequired": false,
+          "description": "Registers a new user account.",
+          "headers": [],
+          "queryParams": [],
+          "requestBody": {
+            "contentType": "application/json",
+            "fields": [
+              { "name": "username", "type": "string", "required": true, "description": "Unique username for the account" },
+              { "name": "email", "type": "string", "required": true, "description": "User's email address" },
+              { "name": "password", "type": "string", "required": true, "description": "Account password" },
+              { "name": "name", "type": "string", "required": true, "description": "Full display name of the user" }
+            ],
+            "example": {
+              "username": "john_doe",
+              "email": "john@example.com",
+              "password": "Password123",
+              "name": "John Doe"
+            }
+          }
+        },
+        {
+          "name": "login",
+          "method": "POST",
+          "path": "/api/auth/login",
+          "fullUrl": "localhost:5000/api/auth/login",
+          "authRequired": false,
+          "description": "Authenticates a user and returns a JWT token to be used in subsequent requests.",
+          "headers": [],
+          "queryParams": [],
+          "requestBody": {
+            "contentType": "application/json",
+            "fields": [
+              { "name": "username", "type": "string", "required": true, "description": "Registered username" },
+              { "name": "password", "type": "string", "required": true, "description": "Account password" }
+            ],
+            "example": {
+              "username": "john_doe",
+              "password": "Password123"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "leads",
+      "description": "Endpoints for managing lead records. All endpoints require a valid JWT Bearer token.",
+      "endpoints": [
+        {
+          "name": "createLead",
+          "method": "POST",
+          "path": "/api/leads/create",
+          "fullUrl": "localhost:5000/api/leads/create",
+          "authRequired": true,
+          "description": "Creates a new lead record.",
+          "headers": [
+            { "name": "authorization", "value": "bearer <token>", "required": true, "description": "JWT Bearer token obtained from login" }
+          ],
+          "queryParams": [],
+          "requestBody": {
+            "contentType": "application/json",
+            "fields": [
+              { "name": "name", "type": "string", "required": true, "description": "Full name of the lead" },
+              { "name": "email", "type": "string", "required": true, "description": "Lead's email address" },
+              { "name": "status", "type": "string", "required": true, "description": "Lead status. Known values: QUALIFIED, CONTACTED" },
+              { "name": "source", "type": "string", "required": true, "description": "Lead acquisition source. Known values: INSTAGRAM, WEBSITE" }
+            ],
+            "example": {
+              "name": "Neha Gupta",
+              "email": "neha.gupta@gmail.com",
+              "status": "QUALIFIED",
+              "source": "INSTAGRAM"
+            }
+          }
+        },
+        {
+          "name": "getAllLeads",
+          "method": "GET",
+          "path": "/api/leads/all",
+          "fullUrl": "localhost:5000/api/leads/all",
+          "authRequired": true,
+          "description": "Returns a paginated list of all leads.",
+          "headers": [
+            { "name": "authorization", "value": "bearer <token>", "required": true, "description": "JWT Bearer token obtained from login" }
+          ],
+          "queryParams": [
+            { "name": "page", "type": "integer", "required": false, "description": "Page number for paginated results", "example": 2 }
+          ],
+          "requestBody": null
+        },
+        {
+          "name": "getLeadById",
+          "method": "GET",
+          "path": "/api/leads/",
+          "fullUrl": "localhost:5000/api/leads/",
+          "authRequired": true,
+          "description": "Returns a single lead record by its unique ID.",
+          "headers": [
+            { "name": "authorization", "value": "bearer <token>", "required": true, "description": "JWT Bearer token obtained from login" }
+          ],
+          "queryParams": [
+            { "name": "id", "type": "string", "required": true, "description": "The unique ID of the lead", "example": "6a09cffe09ffdd801f9ed8e3" }
+          ],
+          "requestBody": null
+        },
+        {
+          "name": "updateLead",
+          "method": "PATCH",
+          "path": "/api/leads/",
+          "fullUrl": "localhost:5000/api/leads/",
+          "authRequired": true,
+          "description": "Updates fields on an existing lead record identified by its ID.",
+          "headers": [
+            { "name": "authorization", "value": "bearer <token>", "required": true, "description": "JWT Bearer token obtained from login" }
+          ],
+          "queryParams": [
+            { "name": "id", "type": "string", "required": true, "description": "The unique ID of the lead to update", "example": "6a09cffe09ffdd801f9ed8e3" }
+          ],
+          "requestBody": {
+            "contentType": "application/json",
+            "fields": [
+              { "name": "status", "type": "string", "required": false, "description": "Updated lead status. Known values: QUALIFIED, CONTACTED" },
+              { "name": "source", "type": "string", "required": false, "description": "Updated lead source. Known values: INSTAGRAM, WEBSITE" }
+            ],
+            "example": {
+              "status": "CONTACTED",
+              "source": "WEBSITE"
+            }
+          }
+        },
+        {
+          "name": "deleteLead",
+          "method": "DELETE",
+          "path": "/api/leads/",
+          "fullUrl": "localhost:5000/api/leads/",
+          "authRequired": true,
+          "description": "Deletes a lead record by its unique ID.",
+          "headers": [
+            { "name": "authorization", "value": "bearer <token>", "required": true, "description": "JWT Bearer token obtained from login" }
+          ],
+          "queryParams": [
+            { "name": "id", "type": "string", "required": true, "description": "The unique ID of the lead to delete", "example": "6a09cffe09ffdd801f9ed8e3" }
+          ],
+          "requestBody": null
+        }
+      ]
+    }
+  ],
+  "enums": {
+    "leadStatus": ["QUALIFIED", "CONTACTED"],
+    "leadSource": ["INSTAGRAM", "WEBSITE"]
+  },
+  "notes": [
+    "JWT tokens are currently hardcoded in request headers. Consider using a collection variable {{authToken}} populated via a pre-request script.",
+    "The getAllLeads endpoint supports pagination via the 'page' query parameter.",
+    "getLeadById, updateLead, and deleteLead all identify a lead using the 'id' query parameter."
+  ]
+}
